@@ -8,6 +8,10 @@
   <body>
     <h1>This is intermedia page</h1>
     <div id="cookie-container"></div>
+     <div id="url-parameters-container"></div>
+    <h2>URL Parameters:</h2>
+    <ul id="parameters-list"></ul>
+  </div>
     <iframe
       src="https://api-dev.improvlearning.com/api/v1/form?state=NEW%20YORK&student=1620322"
       width="100%"
@@ -29,6 +33,24 @@
         return null;
       }
 
+      function displayURLParameters() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const parametersList = document.getElementById('parameters-list');
+
+      if (!urlParams || !urlParams.keys().next().value) {
+        // If there are no parameters
+        parametersList.innerHTML = "<li>No URL parameters found</li>";
+        return;
+      }
+
+      // Loop through each parameter and append it to the list
+      urlParams.forEach((value, key) => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${key}: ${value}`;
+        parametersList.appendChild(listItem);
+      });
+    }
+
       setTimeout(() => {
         // console.log("cookie", getCookie("student"));
         const cookieContainer = document.getElementById("cookie-container");
@@ -43,6 +65,8 @@
         urlParams.forEach((value, key) => {
           console.log(`${key}: ${value}`);
         });
+
+        displayURLParameters();
       }, 2000);
     </script>
   </body>
