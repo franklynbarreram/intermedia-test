@@ -38,6 +38,11 @@
         cookieContainer.textContent = "Cookies dentro de iframe: " + cookies;
 
         console.log("Cookie dentro de iframe; ", document.cookie);
+        const urlParams = new URLSearchParams(window.location.search);
+        console.log("URL Parameters:");
+        urlParams.forEach((value, key) => {
+          console.log(`${key}: ${value}`);
+        });
       }, 2000);
     </script>
   </body>
