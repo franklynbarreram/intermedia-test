@@ -7,6 +7,7 @@
   </head>
   <body>
     <h1>This is intermedia page</h1>
+    <div id="cookie-container"></div>
     <iframe
       src="https://api-dev.improvlearning.com/api/v1/form?state=NEW%20YORK&student=1620322"
       width="100%"
@@ -30,6 +31,12 @@
 
       setTimeout(() => {
         // console.log("cookie", getCookie("student"));
+        const cookieContainer = document.getElementById("cookie-container");
+        const cookies = document.cookie; // Obtiene todas las cookies como un string
+
+        // Inserta las cookies dentro del div
+        cookieContainer.textContent = "Cookies dentro de iframe: " + cookies;
+
         console.log("Cookie dentro de iframe; ", document.cookie);
       }, 2000);
     </script>
