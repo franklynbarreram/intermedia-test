@@ -68,6 +68,32 @@
 
         displayURLParameters();
       }, 2000);
+
+
+      window.addEventListener('message', (event) => {
+          console.log("ee", event);
+
+          const allowedOrigin = 'https://tovuti-test.vercel.app/'; 
+
+          if (event.origin !== allowedOrigin) {
+              console.warn('Message from unauthorized origin:', event.origin);
+              return;
+          }
+
+          const data = event.data;
+
+          if (data.cookies) {
+              console.log('Received cookies:', data.cookies);
+
+              document.getElementById('cookie-output').textContent = data.cookies;
+          } else {
+              console.warn('No cookies received.');
+          }
+      });
+
+      document.body.innerHTML += '<div>Received Cookies emit: <span id="cookie-output"></span></div>';
+
+
     </script>
   </body>
 </html>
