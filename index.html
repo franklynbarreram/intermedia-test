@@ -12,12 +12,12 @@
     <!-- <h2>URL Parameters:</h2>
     <ul id="parameters-list"></ul> -->
   </div>
-    <iframe
+    <!-- <iframe
       src="https://api-dev.improvlearning.com/api/v1/form?state=NEW%20YORK&student=1620322"
       width="100%"
       height="800px"
       frameborder="0"
-    ></iframe>
+    ></iframe> -->
     <script>
       function getCookie(name) {
         const cookieArr = document.cookie.split(";");
@@ -30,6 +30,15 @@
           }
         }
 
+        return null;
+      }
+
+      function getCookieFromString(cookieString, name) {
+        const value = `; ${cookieString}`;
+        const parts = value.split(`; ${name}=`);
+
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        
         return null;
       }
 
@@ -87,6 +96,27 @@
                   console.log('Received cookies:', data.cookies);
 
                   document.getElementById('cookie-container').textContent = `Cookies received by ${event.origin}:  `+data.cookies;
+
+                  const state = getCookieFromString(data.cookies, "state");
+                  const student = getCookieFromString(data.cookies, "student");
+
+                  let iframeSrc = "https://api-dev.improvlearning.com/api/v1/form";
+                  const params = [];
+
+                  if (state) params.push(`state=${encodeURIComponent(state)}`);
+                  if (student) params.push(`student=${encodeURIComponent(student)}`);
+
+                  if (params.length > 0) {
+                    iframeSrc += "?" + params.join("&");
+                  }
+
+                  const iframe = document.createElement("iframe");
+                  iframe.src = iframeSrc;
+                  iframe.width = "100%";
+                  iframe.height = "800px";
+                  iframe.frameBorder = "0";
+
+                  document.body.appendChild(iframe);
               }
           }
 
